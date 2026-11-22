@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Q-FLOW — Your clinic journey, in sync</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FFF9F6;--bg2:#FDF1EC;--al:#F7E5DF;--bl:#F3D5CD;--pe:#F5D5C5;--ac:#E9BBA7;--cr:#FBF3E9;--tx:#674B46;--t2:#8A6F67;--bd:#F0E2DC;--ok:#A5BBA5;--wa:#E8C18A;--da:#CE8F88}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 Manrope,system-ui,sans-serif}
+h1,h2,h3{margin:0 0 8px;font-weight:800;letter-spacing:-.01em}h2{font-size:22px}h3{font-size:16px}
+.wrap{max-width:760px;margin:0 auto;padding:16px 16px 96px}.wide{max-width:1000px}
+.card{background:#fff;border:1px solid var(--bd);border-radius:20px;padding:18px;margin:0 0 14px;box-shadow:0 4px 18px rgba(103,75,70,.06)}
+.m{color:var(--t2);font-size:13px}.top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.logo{font-weight:800;font-size:20px;letter-spacing:.02em}.logo i{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--ac);margin-right:7px}
+input,select{width:100%;padding:12px 14px;border:1px solid var(--bd);border-radius:14px;background:var(--bg);color:var(--tx);font:inherit;margin:4px 0 10px;min-height:46px}
+input:focus,select:focus,button:focus-visible{outline:2px solid var(--ac);outline-offset:1px}
+.btn{border:0;background:var(--ac);color:var(--tx);font:inherit;font-weight:800;padding:12px 18px;border-radius:14px;cursor:pointer;min-height:46px;transition:.2s}
+.btn:hover{background:var(--pe)}.btn.g{background:var(--al)}.btn.sm{padding:7px 12px;min-height:36px;font-size:13px;border-radius:12px}.btn.d{background:var(--bl)}.btn.full{width:100%}
+.seg{display:flex;background:var(--al);border-radius:14px;padding:4px;margin-bottom:12px}.seg button{flex:1;border:0;background:none;padding:10px;border-radius:11px;font:inherit;font-weight:600;color:var(--tx);cursor:pointer;min-height:44px}.seg .on{background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.chip{display:inline-block;font-size:12px;font-weight:600;background:var(--al);border-radius:20px;padding:2px 9px;margin-left:4px}.chip.w{background:var(--wa)}.chip.ok{background:var(--ok)}.chip.bad{background:var(--da)}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--bd);flex-wrap:wrap}.row:last-child{border:0}.acts{display:flex;gap:6px;flex-wrap:wrap}
+.tabs{display:flex;gap:6px;overflow-x:auto;margin-bottom:14px}.tabs button{border:1px solid var(--bd);background:#fff;border-radius:14px;padding:10px 16px;font:inherit;font-weight:600;color:var(--tx);cursor:pointer;white-space:nowrap;min-height:44px}.tabs .on{background:var(--pe)}
+.nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--bd);display:flex;justify-content:space-around;padding:6px 4px calc(6px + env(safe-area-inset-bottom))}.nav button{border:0;background:none;color:var(--t2);font:inherit;font-size:12px;font-weight:600;padding:8px 10px;min-width:64px;min-height:48px;cursor:pointer;border-radius:12px}.nav .on{color:var(--tx);background:var(--al)}
+.big{font-size:40px;font-weight:800;line-height:1}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}.stat{background:var(--cr);border-radius:16px;padding:14px}.stat b{display:block;font-size:24px}
+.tl{list-style:none;margin:14px 0 0;padding:0}.tl li{position:relative;padding:0 0 16px 34px;color:var(--t2)}.tl li:before{content:"";position:absolute;left:9px;top:20px;bottom:-2px;width:2px;background:var(--bd)}.tl li:last-child:before{display:none}
+.tl li:after{content:"";position:absolute;left:0;top:2px;width:20px;height:20px;border-radius:50%;background:#fff;border:2px solid var(--bd)}
+.tl li.done{color:var(--tx)}.tl li.done:after{background:var(--ok);border-color:var(--ok)}.tl li.done:before{background:var(--ok)}
+.tl li.on{color:var(--tx);font-weight:800}.tl li.on:after{background:var(--ac);border-color:var(--ac);box-shadow:0 0 0 5px var(--pe)}
+.bar{height:10px;background:var(--al);border-radius:6px;overflow:hidden;margin:4px 0 10px}.bar i{display:block;height:100%;background:var(--ac)}
+.box{background:var(--cr);border-radius:14px;padding:12px;margin-top:10px;font-size:14px}.rec{border-left:4px solid var(--wa)}
+#toast{position:fixed;left:50%;bottom:90px;transform:translate(-50%,20px);background:var(--tx);color:#fff;padding:12px 18px;border-radius:14px;opacity:0;pointer-events:none;transition:.25s;max-width:90vw;z-index:9}#toast.show{opacity:1;transform:translate(-50%,0)}
+.disp{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}.disp .big{font-size:72px}
+.empty{text-align:center;color:var(--t2);padding:26px 10px}
+@media(min-width:900px){.wrap{padding-top:28px}}@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head><body><div id="app"></div><div id="toast" role="status"></div>
+<noscript>Q-FLOW needs JavaScript.</noscript>
+<script>window.QFLOW_API="";/* "" = same origin (Netlify proxy). Or set to https://YOUR-API.onrender.com for local tests */</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.min.js" defer></script>
+<script>
+const $=s=>document.querySelector(s),API=window.QFLOW_API||'';
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const T=t=>t?new Date(t).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}):'—',uuid=()=>crypto.randomUUID?crypto.randomUUID():String(Date.now())+Math.random().toString(36).slice(2);
+let csrf='',me=null,sock=null,live=false,loading=true,err='',data={},ui={role:'patient',mode:'login',ptab:'home',stab:'queue',res:[],sel:null,docs:[],idem:uuid(),widem:uuid(),busy:false};
+function toast(m){const t=$('#toast');t.textContent=m;t.className='show';clearTimeout(toast.h);toast.h=setTimeout(()=>t.className='',3500)}
+async function api(method,path,body,headers){let r;try{r=await fetch(API+'/api'+path,{method,credentials:'include',headers:{'content-type':'application/json',...(csrf?{'x-csrf-token':csrf}:{}),...headers},body:body?JSON.stringify(body):undefined})}catch(e){throw Object.assign(new Error('Cannot reach the server. Check your connection.'),{status:0})}
+const j=await r.json().catch(()=>({}));if(!r.ok){const er=j.error||{};throw Object.assign(new Error((er.details&&er.details[0]&&er.details[0].message)||er.message||'Something went wrong'),{status:r.status,code:er.code})}
+if(j.data&&j.data.csrfToken)csrf=j.data.csrfToken;return j.data}
+const B=(a,i,l,k='',v='')=>`<button class="btn sm ${k}" data-a="${a}" data-i="${esc(i)}" data-v="${esc(v)}">${l}</button>`;
+const isStaff=()=>me&&me.memberships.length>0,mem=()=>me.memberships[0],role=()=>mem().role,docName=id=>((data.doctors||[]).find(d=>d.id===id)||{}).displayName||'—';
+/* ---------- data loading ---------- */
+async function loadMe(){try{me=await api('GET','/auth/me')}catch(e){me=null}}
+async function refresh(force){if(!me){loading=false;return render()}try{err='';
+if(isStaff()){const c=mem().clinicId;[data.queue,data.doctors]=await Promise.all([api('GET',`/clinics/${c}/queue?limit=100`),api('GET',`/clinics/${c}/doctors`)]);
+if(role()==='clinic_admin'&&ui.stab==='admin')[data.staff,data.audit,data.deps,data.clinic]=await Promise.all([api('GET',`/clinics/${c}/staff`),api('GET',`/clinics/${c}/audit-logs?limit=15`),api('GET',`/clinics/${c}/departments`),api('GET',`/clinics/${c}`)])}
+else{data.tokens=await api('GET','/my/tokens?limit=50');const act=data.tokens.filter(t=>!['done','cancelled'].includes(t.status));data.views=await Promise.all(act.map(t=>api('GET','/tokens/'+t.id)));
+data.notifs=await api('GET','/notifications?limit=50');if(ui.ptab==='alerts'){const u=data.notifs.filter(n=>!n.readAt);await Promise.all(u.map(n=>api('PATCH',`/notifications/${n.id}/read`,{}))).catch(()=>{});u.forEach(n=>n.readAt=1);data.seen=1}}}
+catch(e){if(e.status===401){me=null;csrf=''}else err=e.message}loading=false;const a=document.activeElement;if(force||!a||!/INPUT|SELECT|TEXTAREA/.test(a.tagName))render()}
+let rt;const soon=()=>{clearTimeout(rt);rt=setTimeout(()=>refresh(),300)};
+function connect(){if(sock||!me||typeof io==='undefined')return;sock=io(API||undefined,{withCredentials:true,transports:['polling','websocket']});
+sock.on('connect',()=>{live=true;refresh()});sock.on('disconnect',()=>{live=false;render()});sock.on('connect_error',()=>{live=false});
+['QUEUE_UPDATED','TOKEN_STATUS_CHANGED','NOTIFICATION_CREATED','WAITING_ESTIMATE_UPDATED','DOCTOR_AVAILABILITY_CHANGED','TOKEN_CREATED'].forEach(e=>sock.on(e,soon))}
+/* ---------- views ---------- */
+function render(){const A=$('#app');if(loading)return A.innerHTML='<div class="wrap"><div class="card empty">Loading…</div></div>';
+const h=location.hash;if(h.startsWith('#track='))return A.innerHTML=trackView();if(h.startsWith('#display='))return A.innerHTML=displayView();
+A.innerHTML=!me?authView():isStaff()?staffView():patientView()}
+const banner=()=>err?`<div class="card" style="border-color:var(--da)">${esc(err)} ${B('retry','','Try again','g')}</div>`:'';
+function authView(){const c=ui.role==='clinic',s=ui.mode==='signup';
+return`<div class="wrap"><div class="top"><div class="logo"><i></i>Q-FLOW</div></div><h1 style="font-size:30px">Your clinic journey, in sync.</h1><p class="m">Find your clinic, get a token, and follow your visit live.</p>
+<div class="card">${s?`<div class="seg"><button class="${c?'':'on'}" data-a="role" data-i="patient">I'm a patient</button><button class="${c?'on':''}" data-a="role" data-i="clinic">I'm a clinic</button></div>`:''}
+${s?'<label class="m">Your name</label><input id="fn" autocomplete="name" maxlength="80">':''}${s&&c?'<label class="m">Clinic name (must be unique)</label><input id="cn" maxlength="80">':''}
+<label class="m">Email</label><input id="em" type="email" autocomplete="email" autocapitalize="none"><label class="m">Password ${s?'(10+ characters)':''}</label><input id="pw" type="password" autocomplete="${s?'new-password':'current-password'}">
+<button class="btn full" data-a="${s?'signup':'login'}">${s?'Create account':'Log in'}</button>
+<p class="m" style="text-align:center;margin:12px 0 0">${s?'Have an account?':'New here?'} <a href="#" data-a="mode" data-i="${s?'login':'signup'}" style="color:var(--tx);font-weight:800">${s?'Log in':'Create account'}</a></p></div>${banner()}
+<p class="m">Q-FLOW coordinates clinic operations. It does not diagnose, decide medical priority, or replace a doctor's decisions.</p></div>`}
+const FS={waiting:'Waiting for consultation',serving:'In consultation',missed:'Temporarily unavailable',done:'Completed',cancelled:'Cancelled'};
+function why(f){const a=[];a.push(f.sampleSize?`based on ${f.sampleSize} recent consultations (avg ${f.meanConsultationMinutes} min)`:'no consultation data yet, using an 8 min default');if(f.consultationInProgress)a.push(`consultation in progress (~${f.remainingMinutesForCurrent} min left)`);if(f.reportedDelayMinutes)a.push(`doctor reported ${f.reportedDelayMinutes} min delay`);if(f.servicePaused)a.push('service paused');if(f.doctorAvailable===false)a.push('doctor unavailable');if(f.notArrivedAhead)a.push(f.notArrivedAhead+' ahead not yet arrived');return a.join('; ')}
+function jcard(v,pub){const e=v.estimate,w=v.arrivalWindow,act=(v.journey.stages.find(s=>s.state==='active')||{}).name;
+const st=v.status==='post'?(act||'After consultation'):FS[v.status];
+return`<div class="card"><div class="top" style="margin:0"><div><b>${esc(v.clinic.name)}</b><div class="m">${esc(v.doctor.name)} · ${esc(v.department)}</div></div><div class="big">${esc(v.label)}</div></div>
+<p style="margin:10px 0 0"><b>${esc(st)}</b>${v.status==='waiting'&&v.arrivalStatus!=='arrived'&&!pub?' <span class="chip w">arrival not confirmed</span>':''}${v.doctor.paused?' <span class="chip w">doctor paused</span>':''}</p>
+${e?`<div class="grid" style="margin-top:10px"><div class="stat"><b>${e.minMinutes}–${e.maxMinutes} min</b><span class="m">estimated wait</span></div><div class="stat"><b>${v.ahead}</b><span class="m">patients ahead</span></div></div>
+<div class="box">Serving now: <b>${esc(v.nowServing||'none')}</b> · Next: <b>${esc(v.next||'none')}</b><br><span class="m">Confidence: ${esc(e.confidence)}. Calculated ${T(e.calculatedAt)}. ${esc(why(e.factors))}.</span></div>
+${w?`<div class="box rec"><b>${w.arriveNow?'Please be at the clinic now.':`Suggested arrival: in ${w.fromMinutes}–${w.toMinutes} min`}</b><br><span class="m">An estimate, not a guarantee. It can change.</span></div>`:''}`:''}
+<ul class="tl">${v.journey.stages.map(s=>`<li class="${s.state==='done'?'done':s.state==='active'?'on':''}">${esc(s.name)}${s.optional?' <span class="m">(if needed)</span>':''}</li>`).join('')}</ul>
+<div class="m">Last updated ${T(v.lastUpdated||v.createdAt)}</div>
+${pub?'':`<div class="acts" style="margin-top:10px">${v.status==='waiting'&&v.arrivalStatus!=='arrived'?B('arrive',v.id,"I've arrived"):''}${['waiting','missed'].includes(v.status)?B('cancel',v.id,'Cancel visit','d'):''}${v.trackingId?B('copy',v.trackingId,'Copy private link','g'):''}</div>`}</div>`}
+function patientView(){const P=ui.ptab,un=(data.notifs||[]).filter(n=>!n.readAt).length;let b='';
+if(P==='home'){b=`<h2>Hello, ${esc(me.user.fullName)}</h2>${banner()}<div class="card"><h3>Find your clinic</h3><input id="cs" placeholder="Search by clinic name" maxlength="60"><button class="btn full" data-a="search">Search</button>
+${ui.res.map(c=>`<div class="row"><div><b>${esc(c.name)}</b>${c.isDemo?' <span class="chip">demo</span>':''}<div class="m">${esc(c.address||'')}</div></div>${B('sel',c.id,'Select')}</div>`).join('')}
+${ui.sel?`<div class="box"><b>${esc(ui.sel.name)}</b><label class="m" style="display:block;margin-top:8px">Doctor</label><select id="jd">${ui.docs.map(d=>`<option value="${d.id}">${esc(d.displayName)} · ${esc(d.department)}${d.available?'':' (unavailable)'}</option>`).join('')}</select><button class="btn full" data-a="join">Get my token</button></div>`:''}</div>
+<h3>My active journeys</h3>${(data.views||[]).map(v=>jcard(v)).join('')||'<div class="card empty">No active visit. Search for your clinic above.</div>'}
+${(data.tokens||[]).filter(t=>t.status==='done').length?'<h3>Previous visits</h3><div class="card">'+data.tokens.filter(t=>t.status==='done').map(t=>`<div class="row"><span><b>${esc(t.clinicName)}</b> ${esc(t.label)}</span><span class="m">${new Date(t.createdAt).toLocaleDateString()}</span></div>`).join('')+'</div>':''}`}
+if(P==='family')b=`<h2>Family</h2><div class="card empty">Caregiver sharing is not available yet. The database supports it, but the sharing feature in the server is not built. Your earlier local prototype had it; it will return once the server side exists.</div>`;
+if(P==='alerts')b=`<h2>Notifications</h2>${banner()}<div class="card">${(data.notifs||[]).map(n=>`<div class="row"><div>${esc(n.message)}<div class="m">${T(n.createdAt)}</div></div></div>`).join('')||'<div class="empty">Nothing yet. Alerts appear when your wait changes.</div>'}</div>
+<div class="card"><h3>Alert settings</h3><div class="acts">${B('pref','arrival_approaching','Turn approaching: toggle','g')}${B('pref','estimate_changed','Estimate changed: toggle','g')}</div><p class="m">Token, consultation and visit updates are always sent.</p></div>`;
+if(P==='profile')b=`<h2>Profile</h2><div class="card"><p><b>${esc(me.user.fullName)}</b><br><span class="m">${esc(me.user.email)}</span></p><p class="m">Tracking links use random IDs and show only your token. Staff see only your name.</p><button class="btn g full" data-a="out">Log out</button></div>
+<div class="card"><h3>Register a clinic</h3><p class="m">Run a clinic? Create it from this account.</p><input id="cn2" placeholder="Clinic name (unique)" maxlength="80"><button class="btn full" data-a="mkclinic">Create clinic</button></div>`;
+return`<div class="wrap"><div class="top"><div class="logo"><i></i>Q-FLOW</div><span class="chip ${live?'ok':'w'}">${live?'live':'reconnecting…'}</span></div>${b}</div>
+<div class="nav">${[['home','Home'],['family','Family'],['alerts','Alerts'+(un?` (${un})`:'')],['profile','Profile']].map(x=>`<button class="${P===x[0]?'on':''}" data-a="ptab" data-i="${x[0]}">${x[1]}</button>`).join('')}</div>`}
+function staffView(){const m=mem(),r=m.role,admin=r==='clinic_admin',tabs=[['queue',r==='doctor'?'My queue':'Queue']];if(admin)tabs.push(['admin','Admin']);
+const body=ui.stab==='admin'&&admin?adminTab(m):queueTab(m);
+return`<div class="wrap wide"><div class="top"><div><div class="logo"><i></i>Q-FLOW</div><span class="m">${esc(m.clinicName)} · ${esc(r.replace('_',' '))}</span></div><div class="acts"><span class="chip ${live?'ok':'w'}">${live?'live':'reconnecting…'}</span>${B('out','','Log out','d')}</div></div>
+<div class="tabs">${tabs.map(x=>`<button class="${ui.stab===x[0]?'on':''}" data-a="stab" data-i="${x[0]}">${x[1]}</button>`).join('')}</div>${banner()}${body}</div>`}
+function queueTab(m){const r=m.role,tk=data.queue||[],docs=data.doctors||[],canRec=r!=='doctor',canDoc=r!=='receptionist';
+const row=(t,btns)=>`<div class="row" data-s="${esc((t.token_label+' '+t.patient_name).toLowerCase())}"><div><b>${esc(t.token_label)}</b> ${esc(t.patient_name)}${t.walk_in?'<span class="chip">walk-in</span>':''}${t.arrival_status==='arrived'?'':'<span class="chip w">not arrived</span>'}${t.missed_count?`<span class="chip">missed ×${t.missed_count}</span>`:''}<div class="m">${esc(docName(t.doctor_id))}</div></div><div class="acts">${btns}</div></div>`;
+const sec=(h,l,e)=>`<div class="card"><h3>${h}</h3>${l.join('')||`<p class="m">${e}</p>`}</div>`,by=s=>tk.filter(t=>t.status===s);
+const mine=d=>r==='clinic_admin'||(r==='doctor'&&m.doctorId===d.id);
+return`${canRec?`<div class="card"><h3>Register walk-in</h3><div class="grid"><div><input id="wn" placeholder="Patient name" maxlength="80"></div><div><select id="wd">${docs.map(d=>`<option value="${d.id}">${esc(d.displayName)}</option>`).join('')}</select></div></div><button class="btn full" data-a="walkin">Generate token</button></div>`:''}
+<div class="card"><h3>Doctors</h3>${docs.map(d=>`<div class="row"><div><b>${esc(d.displayName)}</b> <span class="chip ${d.paused||!d.available?'w':'ok'}">${!d.available?'unavailable':d.paused?'paused':'serving'}</span><div class="m">${esc(d.department)} · ${by('waiting').filter(t=>t.doctor_id===d.id).length} waiting</div></div>${mine(d)?`<div class="acts">${B('dpause',d.id,d.paused?'Resume':'Pause','g',d.paused?'0':'1')}${B('ddelay',d.id,'Report 10 min delay','g','10')}${B('ddelay',d.id,'Clear delay','g','0')}${B('davail',d.id,d.available?'Set unavailable':'Set available','g',d.available?'0':'1')}</div>`:''}</div>`).join('')}</div>
+<input placeholder="Search by name or token" oninput="const q=this.value.toLowerCase();document.querySelectorAll('[data-s]').forEach(x=>x.style.display=x.dataset.s.includes(q)?'':'none')">
+${sec('In consultation',by('serving').map(t=>row(t,(canDoc?B('tk',t.id,'Complete','','complete'):''))),'Nobody right now.')}
+${sec('Waiting',by('waiting').map(t=>row(t,(canDoc?B('tk',t.id,'Start','','start'):'')+(canRec?(t.arrival_status==='arrived'?B('tk',t.id,'Undo arrival','g','unarrive'):B('tk',t.id,'Mark arrived','g','arrive')):'')+B('tk',t.id,'Missed','g','missed')+(canRec?B('tk',t.id,'Cancel','d','cancel'):''))),'Queue is empty.')}
+${sec('Missed turn',by('missed').map(t=>row(t,(canRec?B('tk',t.id,'Recall','','recall')+B('tk',t.id,'Cancel','d','cancel'):''))),'No missed turns.')}
+${sec('After consultation',by('post').map(t=>row(t,B('tk',t.id,'Next stage','','advance'))),'Nobody in later stages.')}
+<p class="m">Staff see live queues. Per-patient estimates are shown to patients; a staff estimate view is not built yet.</p>`}
+function adminTab(m){const d=data.deps||[],c=data.clinic||{settings:{}},s=c.settings||{};
+return`<div class="card"><h3>Add staff</h3><input id="se" type="email" placeholder="Email"><input id="sn" placeholder="Full name" maxlength="80"><select id="sr"><option value="receptionist">Receptionist</option><option value="doctor">Doctor</option><option value="clinic_admin">Administrator</option></select><select id="sd">${d.map(x=>`<option value="${x.id}">${esc(x.name)} (for doctors)</option>`).join('')}</select><input id="sp" type="password" placeholder="Temporary password (10+ chars, new accounts)"><button class="btn full" data-a="addstaff">Add</button></div>
+<div class="card"><h3>Staff</h3>${(data.staff||[]).map(x=>`<div class="row"><span>${esc(x.fullName)} · ${esc(x.role.replace('_',' '))} <span class="chip ${x.status==='active'?'ok':'w'}">${esc(x.status)}</span></span>${x.status==='active'?B('rmstaff',x.id,'Disable','d'):''}</div>`).join('')}</div>
+<div class="card"><h3>Departments and doctors</h3><input id="dn" placeholder="New department name" maxlength="60"><button class="btn g full" data-a="adddep">Add department</button><p></p><input id="ddn" placeholder="Doctor without an account (display name)" maxlength="80"><select id="ddd">${d.map(x=>`<option value="${x.id}">${esc(x.name)}</option>`).join('')}</select><button class="btn g full" data-a="adddoc">Add doctor</button></div>
+<div class="card"><h3>Workflow and queue policy</h3><p class="m">Registration, Waiting and Consultation are fixed. List later stages, comma separated.</p><input id="wf" placeholder="e.g. Diagnostic test, Checkout"><button class="btn g full" data-a="savewf">Save workflow</button>
+<label class="m" style="display:block;margin-top:10px">When a missed token is recalled</label><select id="mp"><option value="original" ${s.missed_policy!=='behind_3'?'selected':''}>Return to original place</option><option value="behind_3" ${s.missed_policy==='behind_3'?'selected':''}>Place behind 3 waiting patients</option></select><button class="btn full" data-a="savepol">Save policy</button></div>
+<div class="card"><h3>Audit history</h3>${(data.audit||[]).map(a=>`<div class="row"><span>${esc(a.action)}</span><span class="m">${T(a.createdAt)} · ${esc(a.actor||'system')}</span></div>`).join('')||'<p class="m">No actions yet.</p>'}</div>`}
+/* public pages (no login, tokens only) */
+let pub=null;async function loadPub(){const h=location.hash;try{pub=await api('GET',h.startsWith('#track=')?'/public/track/'+encodeURIComponent(h.slice(7)):'/public/display/'+encodeURIComponent(h.slice(9)));err=''}catch(e){pub=null;err=e.message}loading=false;render()}
+const trackView=()=>`<div class="wrap"><div class="top"><div class="logo"><i></i>Q-FLOW</div><span class="m">Private link · token only</span></div>${pub?jcard(pub,true):`<div class="card empty">${esc(err||'Loading…')}</div>`}</div>`;
+const displayView=()=>pub?`<div class="wrap wide"><div class="top"><div class="logo"><i></i>${esc(pub.clinic)}</div><span class="m">Token display · anonymous tokens only</span></div><div class="disp">${pub.doctors.map(d=>`<div class="card"><h3>${esc(d.name)}${d.paused?' <span class="chip w">paused</span>':''}</h3><div class="m">Now serving</div><div class="big">${esc(d.nowServing||'—')}</div><p class="m">Next: ${esc(d.nextTokens.join(', ')||'none')}</p></div>`).join('')}</div></div>`:`<div class="wrap"><div class="card empty">${esc(err||'Loading…')}</div></div>`;
+/* ---------- actions ---------- */
+document.addEventListener('click',async e=>{const b=e.target.closest('[data-a]');if(!b||b.tagName==='SELECT')return;e.preventDefault();if(ui.busy)return;ui.busy=true;
+try{await act(b.dataset.a,b.dataset.i,b.dataset.v)}catch(x){if(x.status===401){me=null;csrf='';render()}toast(x.message||'Something went wrong')}finally{ui.busy=false}});
+const val=id=>($(id)?$(id).value:'').trim();
+async function act(a,i,v){const m=me&&me.memberships[0],c=m&&m.clinicId;
+if(a==='role'){ui.role=i;return render()}if(a==='mode'){ui.mode=i;return render()}if(a==='retry')return refresh(true);
+if(a==='signup'){const em=val('#em').toLowerCase(),pw=$('#pw').value,fn=val('#fn');if(!fn||!em||pw.length<10)return toast('Enter your name, email and a password of 10+ characters');
+if(ui.role==='clinic'&&val('#cn').length<3)return toast('Enter your clinic name');await api('POST','/auth/register',{email:em,password:pw,fullName:fn});
+if(ui.role==='clinic'){try{await api('POST','/clinics',{name:val('#cn')})}catch(x){toast('Account created, but the clinic was not: '+x.message)}}
+await loadMe();connect();ui.stab='queue';return refresh(true)}
+if(a==='login'){await api('POST','/auth/login',{email:val('#em').toLowerCase(),password:$('#pw').value});await loadMe();connect();ui.stab='queue';ui.ptab='home';return refresh(true)}
+if(a==='out'){try{await api('POST','/auth/logout',{})}catch(_){}if(sock){sock.disconnect();sock=null}me=null;csrf='';data={};return render()}
+if(a==='ptab'){ui.ptab=i;return refresh(true)}if(a==='stab'){ui.stab=i;return refresh(true)}
+if(a==='search'){ui.sel=null;ui.res=await api('GET','/clinics?q='+encodeURIComponent(val('#cs'))+'&limit=20');if(!ui.res.length)toast('No clinic found with that name');return render()}
+if(a==='sel'){ui.sel=ui.res.find(x=>x.id===i);ui.docs=await api('GET',`/clinics/${i}/doctors`);ui.idem=uuid();return render()}
+if(a==='join'){const r=await api('POST','/tokens',{clinicId:ui.sel.id,doctorId:$('#jd').value},{'idempotency-key':ui.idem});ui.sel=null;ui.res=[];ui.idem=uuid();toast(r.replayed?'You already have this token':'Token created');return refresh(true)}
+if(a==='arrive'){await api('PATCH',`/tokens/${i}/arrival`,{});toast('Thanks! The clinic can see you have arrived.');return refresh(true)}
+if(a==='cancel'){if(!confirm('Cancel this visit?'))return;await api('PATCH',`/tokens/${i}/cancel`,{});return refresh(true)}
+if(a==='copy'){const l=location.origin+location.pathname+'#track='+i;try{await navigator.clipboard.writeText(l);toast('Private link copied')}catch(_){prompt('Copy this link',l)}return}
+if(a==='pref'){const cur=(data.prefs||{})[i]!==false;data.prefs={...(data.prefs||{}),[i]:!cur};await api('PATCH','/notifications/preferences',{[i]:!cur});return toast(i.replace('_',' ')+(!cur?': on':': off'))}
+if(a==='mkclinic'){await api('POST','/clinics',{name:val('#cn2')});await loadMe();ui.stab='queue';return refresh(true)}
+if(a==='walkin'){const n=val('#wn');if(!n)return toast('Enter the patient name');const r=await api('POST','/tokens',{clinicId:c,doctorId:$('#wd').value,walkInName:n},{'idempotency-key':ui.widem});ui.widem=uuid();toast(r.replayed?'Already created':'Token created');return refresh(true)}
+if(a==='tk'){const path=v==='unarrive'?'arrival':v,body=v==='arrive'?{arrived:true}:v==='unarrive'?{arrived:false}:{};
+try{await api('PATCH',`/tokens/${i}/${path}`,body)}catch(x){if(v==='start'&&/not confirmed arrival/.test(x.message)&&confirm('This patient has not confirmed arrival. Start anyway?'))await api('PATCH',`/tokens/${i}/start`,{overrideArrival:true});else throw x}return refresh(true)}
+if(a==='dpause'){await api('PATCH',`/doctors/${i}/pause`,{paused:v==='1'});return refresh(true)}if(a==='ddelay'){await api('PATCH',`/doctors/${i}/delay`,{minutes:+v});return refresh(true)}if(a==='davail'){await api('PATCH',`/doctors/${i}/availability`,{available:v==='1'});return refresh(true)}
+if(a==='addstaff'){const b={email:val('#se'),fullName:val('#sn'),role:$('#sr').value};if($('#sp').value)b.temporaryPassword=$('#sp').value;if(b.role==='doctor')b.departmentId=$('#sd').value;await api('POST',`/clinics/${c}/staff`,b);toast('Staff added');return refresh(true)}
+if(a==='rmstaff'){if(!confirm('Disable this staff account for the clinic?'))return;await api('DELETE',`/clinics/${c}/staff/${i}`);return refresh(true)}
+if(a==='adddep'){await api('POST',`/clinics/${c}/departments`,{name:val('#dn')});return refresh(true)}
+if(a==='adddoc'){await api('POST',`/clinics/${c}/doctors`,{displayName:val('#ddn'),departmentId:$('#ddd').value});return refresh(true)}
+if(a==='savewf'){await api('PUT',`/clinics/${c}/workflow`,{stages:val('#wf').split(',').map(s=>s.trim()).filter(Boolean).map(name=>({name}))});return toast('Workflow saved for new visits')}
+if(a==='savepol'){await api('PATCH',`/clinics/${c}`,{settings:{missed_policy:$('#mp').value}});return toast('Policy saved')}}
+async function boot(){const h=location.hash;if(h.startsWith('#track=')||h.startsWith('#display=')){await loadPub();setInterval(loadPub,h.startsWith('#track=')?8000:5000);return}
+await loadMe();loading=false;connect();await refresh(true);setInterval(()=>{if(me)refresh()},20000)}
+window.addEventListener('hashchange',()=>location.reload());window.addEventListener('load',boot);
+window.addEventListener('online',()=>{toast('Back online. Refreshing from the server.');refresh(true)});window.addEventListener('offline',()=>toast('You are offline. Changes will not be saved until you reconnect.'));
+</script></body></html>
