@@ -77,8 +77,9 @@ async function listQueue(clinicId, { doctorId, departmentId, status, limit, offs
   if (onlyDoctorUserId) add('t.doctor_id IN (SELECT id FROM doctors WHERE user_id=?)', onlyDoctorUserId);
   vals.push(limit, offset);
   const r = await query(`SELECT t.id,t.token_label,t.status,t.arrival_status,t.doctor_id,t.department_id,t.missed_count,t.created_at,t.queue_sequence,
-      COALESCE(t.walk_in_name, pp.display_name) AS patient_name, (t.patient_profile_id IS NULL) AS walk_in
-    FROM tokens t LEFT JOIN patient_profiles pp ON pp.id=t.patient_profile_id WHERE ${where.join(' AND ')}
+      COALESCE(t.walk_in_name, pp.display_name) AS patient_name, (t.patient_profile_id IS NULL) AS walk_in, w.mn AS est_min, w.mx AS est_max, w.cf AS est_confidence
+    FROM tokens t LEFT JOIN patient_profiles pp ON pp.id=t.patient_profile_id
+    LEFT JOIN LATERAL (SELECT predicted_min_minutes AS mn, predicted_max_minutes AS mx, confidence AS cf FROM waiting_predictions x WHERE x.token_id=t.id ORDER BY calculated_at DESC LIMIT 1) w ON t.status='waiting' WHERE ${where.join(' AND ')}
     ORDER BY (t.status IN ('done','cancelled')), t.queue_sequence LIMIT $${vals.length - 1} OFFSET $${vals.length}`, vals);
   return r.rows;
 }

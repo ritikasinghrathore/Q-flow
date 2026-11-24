@@ -10,8 +10,11 @@ The frontend in `../frontend/index.html` now calls this API (no localStorage dat
 ### Built
 Auth (register/login/logout/me, Argon2id, HttpOnly sessions, CSRF header, rate limits, password reset tokens) · clinics, departments, doctors, staff and roles, workflow stages, clinic rules · tokens with concurrency-safe numbering and idempotency · queue with explicit transitions (arrival, start, complete, missed, recall, cancel, advance) · journeys with event history · prediction engine (`wma-v1`) with stored snapshots and actual-wait capture · arrival windows · de-duplicated in-app notifications with preferences · public anonymous tracking and token-display endpoints · Socket.IO rooms (authenticated, server-emitted only) · audit logs · demo seed.
 
+### Added later (written and syntax-checked, NOT yet run against a real database)
+Family Journey Mode (`/api/family/*`: invite by email, list, revoke, view a shared person's active visits) · Congestion Radar and prediction accuracy report (`GET /api/clinics/:id/analytics?days=7`: time per stage, slowest stage, doctor load, busy hours, average error and range coverage) · staff-side per-patient estimates in the queue · `GET /api/health` · Account section (`GET/PATCH /api/account`: account details, editable profile, visit history and stats, family sharing summary).
+
 ### Not built yet
-Family/caregiver endpoints (table exists) · analytics endpoints and prediction MAE/coverage reports · offline outbox sync · frontend wiring · SMS/email/WhatsApp providers (password reset therefore cannot send email in production) · backups automation · data-retention jobs · email verification · journey-template editing beyond `PUT /workflow` · dedicated receptionist/admin screens.
+offline outbox sync · frontend wiring · SMS/email/WhatsApp providers (password reset therefore cannot send email in production) · backups automation · data-retention jobs · email verification · journey-template editing beyond `PUT /workflow` · dedicated receptionist/admin screens.
 
 ## Local setup
 ```

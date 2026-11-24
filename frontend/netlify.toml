@@ -1,13 +1,14 @@
-# Replace YOUR-API.onrender.com with your Render URL. Proxying /api makes the session cookie first-party,
+# Netlify forwards /api and /socket.io to the Render server below (first-party cookies, needed for Safari/iOS).
+# Replace q-flow-mcfh.onrender.com with your Render URL. Proxying /api makes the session cookie first-party,
 # which is required for Safari/iOS (they block cookies sent between different websites).
 [[redirects]]
   from = "/api/*"
-  to = "https://YOUR-API.onrender.com/api/:splat"
+  to = "https://q-flow-mcfh.onrender.com/api/:splat"
   status = 200
   force = true
 
 [[redirects]]
   from = "/socket.io/*"
-  to = "https://YOUR-API.onrender.com/socket.io/:splat"
+  to = "https://q-flow-mcfh.onrender.com/socket.io/:splat"
   status = 200
   force = true
